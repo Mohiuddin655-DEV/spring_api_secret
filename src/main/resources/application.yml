@@ -1,8 +1,13 @@
 spring:
   config:
-    import: optional:secrets.properties
+    import: optional:secrets.yml
+  data:
+    mongodb:
+      database: spring
+      uri: mongodb+srv://mohiuddin655:mohiuddin655@spring-crud.9ashljo.mongodb.net/?retryWrites=true&w=majority
 
-notion:
+secret:
   api-url: https://api.notion.com
   api-version: 2021-08-16
+
 

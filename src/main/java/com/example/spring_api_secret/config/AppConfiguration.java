@@ -1,4 +1,4 @@
-package com.example.spring_api_secret;
+package com.example.spring_api_secret.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
