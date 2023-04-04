@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -18,6 +19,11 @@ public class NotionController {
 
     @GetMapping("/info")
     public Map<String, String> printAllProps() {
+        if (notionConfig == null){
+            return  Map.of(
+                    "Message", "notion config is null"
+            );
+        }
         return Map.of(
                 "apiUrl", notionConfig.apiUrl(),
                 "apiVersion", notionConfig.apiVersion(),
