@@ -19,17 +19,11 @@ public class NotionController {
 
     @GetMapping("/info")
     public Map<String, String> printAllProps() {
-//        final Map<String, String> data = Map.of(
-//                "apiUrl", notionConfig.apiUrl(),
-//                "apiVersion", notionConfig.apiVersion(),
-//                "authToken", notionConfig.authToken(),
-//                "databaseId", notionConfig.databaseId()
-//        );
-        Map<String, String> data = new HashMap<>();
-        data.put("apiUrl", "");
-        data.put("apiVersion", "");
-        data.put("authToken", "");
-        data.put("databaseId", "");
+        final Map<String, String> data = new HashMap<>();
+        data.put("apiUrl", notionConfig.apiUrl());
+        data.put("apiVersion", notionConfig.apiVersion());
+        data.put("authToken", notionConfig.authToken());
+        data.put("databaseId", notionConfig.databaseId());
         return data;
     }
 
