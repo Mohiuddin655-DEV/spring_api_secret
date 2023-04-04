@@ -18,19 +18,19 @@ public class NotionController {
     }
 
     @GetMapping("/info")
-    public String printAllProps() {
-        return "Info";
-//        if (notionConfig == null){
-//            return  Map.of(
-//                    "Message", "notion config is null"
-//            );
-//        }
-//        return Map.of(
+    public Map<String, String> printAllProps() {
+//        final Map<String, String> data = Map.of(
 //                "apiUrl", notionConfig.apiUrl(),
 //                "apiVersion", notionConfig.apiVersion(),
 //                "authToken", notionConfig.authToken(),
 //                "databaseId", notionConfig.databaseId()
 //        );
+        Map<String, String> data = new HashMap<>();
+        data.put("apiUrl", "");
+        data.put("apiVersion", "");
+        data.put("authToken", "");
+        data.put("databaseId", "");
+        return data;
     }
 
     @GetMapping("/hello")
