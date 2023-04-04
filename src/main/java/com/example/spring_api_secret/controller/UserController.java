@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService service;
+    private UserService service;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
