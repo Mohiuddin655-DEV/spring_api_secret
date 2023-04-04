@@ -1,5 +1,6 @@
 package com.example.spring_api_secret;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,6 +9,7 @@ import java.util.Map;
 @RestController
 public class NotionController {
 
+    @Autowired
     private final NotionConfigProperties notionConfig;
 
     public NotionController(NotionConfigProperties notionConfig) {
