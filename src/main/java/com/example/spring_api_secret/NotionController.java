@@ -1,7 +1,6 @@
 package com.example.spring_api_secret;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -23,5 +22,10 @@ public class NotionController {
                 "authToken", notionConfig.authToken(),
                 "databaseId", notionConfig.databaseId()
         );
+    }
+
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello, I'm here!";
     }
 }
