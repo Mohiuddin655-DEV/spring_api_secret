@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("")
 public class NotionController {
 
     private final NotionConfigProperties notionConfig;
@@ -16,7 +15,7 @@ public class NotionController {
         this.notionConfig = notionConfig;
     }
 
-    @GetMapping("/notion")
+    @GetMapping
     public Map<String, String> printAllProps() {
         return Map.of(
                 "apiUrl", notionConfig.apiUrl(),
