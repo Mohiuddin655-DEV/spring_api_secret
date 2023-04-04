@@ -33,4 +33,4 @@ build/
 .vscode/
 
 
-secrets.properties
+#secrets.properties

@@ -18,17 +18,12 @@ public class NotionController {
     }
 
     @GetMapping("/info")
-    public Map<String, String> printAllProps() {
+    public Map<String, String> info() {
         final Map<String, String> data = new HashMap<>();
         data.put("apiUrl", notionConfig.apiUrl());
         data.put("apiVersion", notionConfig.apiVersion());
         data.put("authToken", notionConfig.authToken());
         data.put("databaseId", notionConfig.databaseId());
         return data;
-    }
-
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello, I'm here!";
     }
 }
