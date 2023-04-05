@@ -1,4 +1,27 @@
 spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://accounts.google.com/o/oauth2/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: name
+
+        registration:
+          google:
+            client-id: 355057409481-ohfilk9511nar1fii9igvg1oiafi472v.apps.googleusercontent.com
+            client-secret: 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
+            # redirect-uri: { baseUrl }/{action}/oauth2/code/{registrationId}
+            scope:
+              - email
+              - profile
+
+          github:
+            client-id: ddd200547ee00ed9caa4
+            client-secret: 611886c0c1b2e91a1b068d2bf991a52b84a6cf85
+
   config:
     import: optional:secrets.yml
   data:
@@ -9,5 +32,3 @@ spring:
 secret:
   api-url: https://api.notion.com
   api-version: 2021-08-16
-
-

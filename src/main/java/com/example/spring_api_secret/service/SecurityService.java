@@ -1,7 +1,7 @@
 package com.example.spring_api_secret.service;
 
-import com.example.spring_api_secret.dto.AuthorizeResponse;
-import com.example.spring_api_secret.entity.Authorize;
+import com.example.spring_api_secret.dto.Response;
+import com.example.spring_api_secret.entity.Api;
 import com.example.spring_api_secret.properties.SecurityConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +28,13 @@ public class SecurityService {
         return data;
     }
 
-    public AuthorizeResponse token() {
-        final AuthorizeResponse response = new AuthorizeResponse();
-        final Authorize authorize = Authorize.of(properties.databaseId(), properties.authToken());
-        authorize.setApi(properties.apiUrl());
-        authorize.setApiVersion(properties.apiVersion());
-        response.setAuthorize(authorize);
-        return response;
+    public Response<Api> auth() {
+        return Response.withData(Api.of(
+                properties.apiUrl(),
+                properties.apiVersion(),
+                properties.databaseId(),
+                properties.authToken()
+        ));
     }
 
 }

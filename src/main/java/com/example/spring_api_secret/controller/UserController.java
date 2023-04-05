@@ -22,67 +22,43 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public Response<String> add(@Valid @RequestBody @NotNull User user) {
-        String message = service.add(user);
-        Response<String> response = new Response<>();
-        response.setMessage(message);
-        return response;
+        return Response.withMessage(service.add(user));
     }
 
     @PutMapping("/{id}")
     public Response<String> update(@RequestBody User user, @PathVariable String id) {
-        String message = service.update(user, id);
-        Response<String> response = new Response<>();
-        response.setMessage(message);
-        return response;
+        return Response.withMessage(service.update(user, id));
     }
 
     @PatchMapping("/{id}")
     public Response<User> fetch(@PathVariable String id) {
-        User user = service.fetch(id);
-        Response<User> response = new Response<>();
-        response.setResponse(user);
-        return response;
+        return Response.withData(service.fetch(id));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public Response<String> delete(@PathVariable String id) {
-        String message = service.delete(id);
-        Response<String> response = new Response<>();
-        response.setMessage(message);
-        return response;
+        return Response.withMessage(service.delete(id));
     }
 
     @DeleteMapping("")
     public Response<String> clear() {
-        String message = service.deletes();
-        Response<String> response = new Response<>();
-        response.setMessage(message);
-        return response;
+        return Response.withMessage(service.deletes());
     }
 
     @GetMapping("/{id}")
     public Response<User> get(@PathVariable String id) {
-        User user = service.get(id);
-        Response<User> response = new Response<>();
-        response.setResponse(user);
-        return response;
+        return Response.withData(service.get(id));
     }
 
     @GetMapping("")
     public Response<List<User>> gets() {
-        List<User> users = service.gets();
-        Response<List<User>> response = new Response<>();
-        response.setResponse(users);
-        return response;
+        return Response.withData(service.gets());
     }
 
     @GetMapping("/size")
     public Response<Long> count() {
-        long size = service.count();
-        Response<Long> response = new Response<>();
-        response.setResponse(size);
-        return response;
+        return Response.withData(service.count());
     }
 
 }

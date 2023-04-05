@@ -1,6 +1,7 @@
 package com.example.spring_api_secret.controller;
 
-import com.example.spring_api_secret.dto.AuthorizeResponse;
+import com.example.spring_api_secret.dto.Response;
+import com.example.spring_api_secret.entity.Api;
 import com.example.spring_api_secret.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,8 @@ public class SecurityController {
         return service.info();
     }
 
-    @GetMapping("/authorizer")
-    public AuthorizeResponse token() {
-        return service.token();
+    @GetMapping("/auth")
+    public Response<Api> auth() {
+        return service.auth();
     }
 }
