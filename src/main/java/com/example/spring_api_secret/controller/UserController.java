@@ -22,43 +22,43 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public Response<String> add(@Valid @RequestBody @NotNull User user) {
-        return Response.withMessage(service.add(user));
+        return service.add(user);
     }
 
     @PutMapping("/{id}")
     public Response<String> update(@RequestBody User user, @PathVariable String id) {
-        return Response.withMessage(service.update(user, id));
+        return service.update(user, id);
     }
 
     @PatchMapping("/{id}")
     public Response<User> fetch(@PathVariable String id) {
-        return Response.withData(service.fetch(id));
+        return service.fetch(id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public Response<String> delete(@PathVariable String id) {
-        return Response.withMessage(service.delete(id));
+        return service.delete(id);
     }
 
     @DeleteMapping("")
     public Response<String> clear() {
-        return Response.withMessage(service.deletes());
+        return service.deletes();
     }
 
     @GetMapping("/{id}")
     public Response<User> get(@PathVariable String id) {
-        return Response.withData(service.get(id));
+        return service.get(id);
     }
 
     @GetMapping("")
     public Response<List<User>> gets() {
-        return Response.withData(service.gets());
+        return service.gets();
     }
 
     @GetMapping("/size")
     public Response<Long> count() {
-        return Response.withData(service.count());
+        return service.count();
     }
 
 }

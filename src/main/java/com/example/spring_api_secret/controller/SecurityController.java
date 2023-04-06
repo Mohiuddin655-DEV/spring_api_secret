@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/security")
+@RequestMapping("/secret")
 public class SecurityController {
 
     @Autowired
     private SecurityService service;
 
     @GetMapping("/info")
-    public Map<String, String> info() {
+    public Response<Map<String, String>> info() {
         return service.info();
     }
 

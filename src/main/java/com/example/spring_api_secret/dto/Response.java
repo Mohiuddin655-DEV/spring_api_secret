@@ -1,103 +1,132 @@
 package com.example.spring_api_secret.dto;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
 
+@Data
 public class Response<T> {
+    private boolean error;
     private boolean success;
-    private Error error;
-    private String message;
+    private Status status;
     private T data;
 
-    public boolean isSuccess() {
-        return success;
+    private Response() {
     }
 
-    public Response<T> setSuccess(boolean success) {
-        this.success = success;
-        return this;
+    public static <T> Response<T> init(){
+        return new Response<>();
     }
 
-    public String getMessage() {
-        return message;
+    public static <T> @NotNull Response<T> withData(T data) {
+        final Response<T> response = new Response<>();
+        response.setData(data);
+        return response;
     }
 
-    public Response<T> setMessage(String message) {
-        this.message = message;
+    public static <T> @NotNull Response<T> withData(T data, String message) {
+        final Response<T> response = new Response<>();
+        response.setData(data);
+        response.setMessage(message);
+        return response;
+    }
+
+    public static <T> @NotNull Response<T> withMessage(String message) {
+        final Response<T> response = new Response<>();
+        response.setMessage(message);
+        return response;
+    }
+
+    public static <T> @NotNull Response<T> withError(String error) {
+        final Response<T> response = new Response<>();
+        response.setError(error);
+        return response;
+    }
+
+    public static <T> @NotNull Response<T> withStatus(Status status) {
+        final Response<T> response = new Response<>();
+        response.setStatus(status);
+        return response;
+    }
+
+    public static <T> @NotNull Response<T> withHttpStatus(HttpStatus status, boolean isError) {
+        final Response<T> response = new Response<>();
+        response.setHttpStatus(status, isError);
+        return response;
+    }
+
+    public void setHttpStatus(HttpStatus status, boolean isError) {
+        this.status = Status.of(status);
+        this.error = isError;
+        this.success = !isError;
+    }
+
+    public void setError(String error) {
+        this.status = Status.error(error);
+        this.error = true;
+    }
+
+    public void setMessage(String message) {
+        this.status = Status.successful(message);
         this.success = true;
-        return this;
     }
 
-    public Error getError() {
-        return error;
-    }
-
-    public Response<T> setError(String error) {
-        this.error = new Error(error);
-        return this;
-    }
-
-    public Response<T> setError(int code) {
-        this.error = new Error(code);
-        return this;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public Response<T> setData(T data) {
+    public void setData(T data) {
+        this.status = Status.successful();
         this.data = data;
         this.success = true;
-        return this;
-    }
-
-    public static <T> Response<T> withData(T data) {
-        return new Response<T>().setData(data);
-    }
-
-    public static <T> Response<T> withData(T data, String message) {
-        return new Response<T>().setData(data).setMessage(message);
-    }
-
-    public static <T> Response<T> withMessage(String message) {
-        return new Response<T>().setMessage(message);
-    }
-
-    public static <T> Response<T> withError(String error) {
-        return new Response<T>().setError(error);
-    }
-
-    public static <T> Response<T> withError(int code) {
-        return new Response<T>().setError(code);
     }
 
     @Data
-    public static class Error {
-        private int code;
-        private String message;
+    public static class Status {
+        private final int code;
 
-        public Error(int code) {
-            this.code = code;
+        private final String message;
+
+        private Status() {
+            this(HttpStatus.OK);
         }
 
-        public Error(String message) {
+        private Status(int code, String message) {
+            this.code = code;
             this.message = message;
         }
 
-        public int getCode() {
-            return code = 0;
+        private Status(@NotNull HttpStatus status) {
+            this.code = status.value();
+            this.message = status.getReasonPhrase();
         }
 
-        public void setCode(int code) {
-            this.code = code;
+        public static @NotNull Status of(HttpStatus status) {
+            return new Status(status);
         }
 
-        public String getMessage() {
-            return message = "";
+        public static @NotNull Status successful() {
+            return new Status(HttpStatus.OK);
         }
 
-        public void setMessage(String message) {
-            this.message = message;
+        public static @NotNull Status successful(String message) {
+            return new Status(200, message);
+        }
+
+        public static @NotNull Status created() {
+            return new Status(HttpStatus.CREATED);
+        }
+
+        public static @NotNull Status updated() {
+            return new Status(200, "Content Updated!");
+        }
+
+        public static @NotNull Status deleted() {
+            return new Status(200, "Content Deleted!");
+        }
+
+        public static @NotNull Status error(String message) {
+            return new Status(400, message);
+        }
+
+        public static @NotNull Status notFound() {
+            return new Status(HttpStatus.NOT_FOUND);
         }
     }
 

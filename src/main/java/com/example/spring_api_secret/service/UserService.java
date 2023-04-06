@@ -1,5 +1,6 @@
 package com.example.spring_api_secret.service;
 
+import com.example.spring_api_secret.dto.Response;
 import com.example.spring_api_secret.entity.User;
 import com.example.spring_api_secret.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
@@ -7,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,48 +32,54 @@ public class UserService {
         return repository.existsById(id);
     }
 
-    public String add(@NotNull User user) {
+    public Response<String> add(@NotNull User user) {
         String id = user.getId();
         if (id != null && isExists(id)) {
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "User already found!");
+            return Response.withError("User already found!");
         } else {
             repository.save(user);
-            return "User create successfully!";
+            return Response.withMessage("User create successfully!");
         }
     }
 
-    public String update(User content, String id) {
+    public Response<String> update(User content, String id) {
         if (!repository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
+            return Response.withError("User not found!");
         } else {
             repository.save(content);
-            return "User update successfully!";
+            return Response.withMessage("User update successfully!");
         }
     }
 
-    public User fetch(String id) {
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+    public Response<User> fetch(String id) {
+        return repository.findById(id).map(Response::withData).orElseGet(() -> Response.withError("User not found!"));
     }
 
-    public String delete(String id) {
+    public Response<String> delete(String id) {
         repository.deleteById(id);
-        return "User deleted!";
+        return Response.withMessage("User deleted!");
     }
 
-    public String deletes() {
+    public Response<String> deletes() {
         repository.deleteAll();
-        return "All data deleted!";
+        return Response.withMessage("Users deleted!");
     }
 
-    public User get(String id) {
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+    public Response<User> get(String id) {
+        return repository.findById(id).map(Response::withData).orElseGet(() -> Response.withError("User not found!"));
     }
 
-    public List<User> gets() {
+    public Response<List<User>> gets() {
         if (repository != null) {
-            return repository.findAll();
+            final List<User> data = repository.findAll();
+            if (!data.isEmpty()) {
+                return Response.withData(data);
+            } else {
+                return Response.withError("Users not found!");
+            }
+        } else {
+            return Response.withError("Bad gateway!");
         }
-        return new ArrayList<>();
     }
 
     public List<User> sort(Sort.Direction direction, String... fields) {
@@ -92,8 +96,8 @@ public class UserService {
         return repository.findAllById(ids);
     }
 
-    public long count() {
-        return repository.count();
+    public Response<Long> count() {
+        return Response.withData(repository.count());
     }
 
 }

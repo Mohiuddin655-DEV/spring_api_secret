@@ -19,13 +19,17 @@ public class SecurityService {
         this.properties = properties;
     }
 
-    public Map<String, String> info() {
-        final Map<String, String> data = new HashMap<>();
-        data.put("apiUrl", properties.apiUrl());
-        data.put("apiVersion", properties.apiVersion());
-        data.put("authToken", properties.authToken());
-        data.put("databaseId", properties.databaseId());
-        return data;
+    public Response<Map<String, String>> info() {
+        try {
+            final Map<String, String> data = new HashMap<>();
+            data.put("apiUrl", properties.apiUrl());
+            data.put("apiVersion", properties.apiVersion());
+            data.put("authToken", properties.authToken());
+            data.put("databaseId", properties.databaseId());
+            return Response.withData(data);
+        } catch (Exception e) {
+            return Response.withError(e.getMessage());
+        }
     }
 
     public Response<Api> auth() {
